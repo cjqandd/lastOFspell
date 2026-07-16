@@ -1,0 +1,5 @@
+dist/
+.sites/
+auth-qr.png
+.agents/
+.codex/
