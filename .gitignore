@@ -3,3 +3,4 @@ dist/
 auth-qr.png
 .agents/
 .codex/
+.openai/
