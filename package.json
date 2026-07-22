@@ -2,6 +2,7 @@
   "name": "the-last-spell-demo",
   "type": "module",
   "scripts": {
-    "build": "node build.mjs"
+    "rules:sync": "node sync-rules.mjs",
+    "build": "node sync-rules.mjs && node build.mjs"
   }
 }

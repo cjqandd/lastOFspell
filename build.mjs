@@ -1,8 +1,10 @@
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 
 const html = await readFile(new URL("./index.html", import.meta.url), "utf8");
+const gameConfig = await readFile(new URL("./game-config.js", import.meta.url), "utf8");
 const worker =
   "const HTML = " + JSON.stringify(html) + ";\n\n" +
+  "const GAME_CONFIG = " + JSON.stringify(gameConfig) + ";\n\n" +
   "export default {\n" +
   "  async fetch(request) {\n" +
   "    const url = new URL(request.url);\n" +
@@ -13,7 +15,12 @@ const worker =
   "          'cache-control': 'public, max-age=300'\n" +
   "        }\n" +
   "      });\n" +
-  "    }\n" +
+    "    }\n" +
+    "    if (url.pathname === '/game-config.js') {\n" +
+    "      return new Response(GAME_CONFIG, {\n" +
+    "        headers: { 'content-type': 'text/javascript; charset=utf-8' }\n" +
+    "      });\n" +
+    "    }\n" +
   "    return new Response('Not Found', { status: 404 });\n" +
   "  }\n" +
   "};\n";
@@ -25,6 +32,10 @@ await writeFile(new URL("./dist/server/index.js", import.meta.url), worker, "utf
 await copyFile(
   new URL("./index.html", import.meta.url),
   new URL("./dist/client/index.html", import.meta.url)
+);
+await copyFile(
+  new URL("./game-config.js", import.meta.url),
+  new URL("./dist/client/game-config.js", import.meta.url)
 );
 await copyFile(
   new URL("./.openai/hosting.json", import.meta.url),
