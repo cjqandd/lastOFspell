@@ -18,9 +18,9 @@ window.GAME_CONFIG = {
     "minimumDamage": 1
   },
   "enemyAI": {
-    "turnStartDelayMs": 420,
-    "stepDelayMs": 180,
-    "turnEndDelayMs": 360
+    "turnStartDelayMs": 210,
+    "stepDelayMs": 90,
+    "turnEndDelayMs": 120
   },
   "units": [
     {
